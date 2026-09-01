@@ -11,6 +11,8 @@
             --header-bg: #eaf1eb;
             --text-dark: #1a4d3a;
             --border-color: #eaeaea;
+            --highlight-bg: #fffde7;
+            --highlight-border: #fbc02d;
         }
 
         body {
@@ -37,6 +39,10 @@
         .calendar-header {
             padding: 25px 30px 15px 30px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
 
         .calendar-header h1 {
@@ -45,7 +51,25 @@
             font-size: 28px;
         }
 
-        /* 星期標題與服裝整合 (平日 2 等份，假日 1 等份) */
+        /* 跳到今天按鈕 */
+        .jump-today-btn {
+            background-color: #d35400;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transition: background-color 0.2s;
+        }
+
+        .jump-today-btn:hover {
+            background-color: #b54600;
+        }
+
+        /* 星期標題與服裝整合 */
         .grid-header {
             display: grid;
             grid-template-columns: repeat(5, 2fr) repeat(2, 1fr);
@@ -89,10 +113,18 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .day-cell:nth-child(7n) {
             border-right: none;
+        }
+
+        /* 電腦版底塊高亮區分 */
+        .day-cell.highlight-day {
+            background-color: var(--highlight-bg) !important;
+            border: 2px solid var(--highlight-border) !important;
+            box-shadow: 0 0 10px rgba(251, 192, 45, 0.4);
         }
 
         /* 手機版專用：每一格內的星期標題 (預設隱藏) */
@@ -186,6 +218,7 @@
 <div class="calendar-container">
     <div class="calendar-header">
         <h1>2026 年 9 月 一年義班</h1>
+        <button class="jump-today-btn" onclick="scrollToToday()">📅 跳到今天</button>
     </div>
 
     <div class="grid-header">
@@ -199,7 +232,7 @@
     </div>
 
     <div class="grid-body">
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-08-31">
             <div class="day-header-mobile">週一 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">8/31</div>
             <div class="event-group cat-brother">
@@ -219,7 +252,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-01">
             <div class="day-header-mobile">週二 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">1</div>
             <div class="event-group cat-language-art">
@@ -228,7 +261,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-02">
             <div class="day-header-mobile">週三</div>
             <div class="day-date">2</div>
             <div class="event-group cat-school">
@@ -241,7 +274,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-03">
             <div class="day-header-mobile">週四 <span class="mobile-uniform">制服</span></div>
             <div class="day-date">3</div>
             <div class="event-group cat-language-art">
@@ -254,7 +287,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-04">
             <div class="day-header-mobile">週五</div>
             <div class="day-date">4</div>
             <div class="event-group cat-language-art">
@@ -266,10 +299,10 @@
             </div>
         </div>
         
-        <div class="day-cell"><div class="day-header-mobile">週六</div><div class="day-date">5</div></div>
-        <div class="day-cell"><div class="day-header-mobile">週日</div><div class="day-date">6</div></div>
+        <div class="day-cell" data-date="2026-09-05"><div class="day-header-mobile">週六</div><div class="day-date">5</div></div>
+        <div class="day-cell" data-date="2026-09-06"><div class="day-header-mobile">週日</div><div class="day-date">6</div></div>
 
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-07">
             <div class="day-header-mobile">週一 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">7</div>
             <div class="event-group cat-language-art">
@@ -278,7 +311,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-08">
             <div class="day-header-mobile">週二 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">8</div>
             <div class="event-group cat-language-art">
@@ -287,7 +320,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-09">
             <div class="day-header-mobile">週三</div>
             <div class="day-date">9</div>
             <div class="event-group cat-language-art">
@@ -299,7 +332,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-10">
             <div class="day-header-mobile">週四 <span class="mobile-uniform">制服</span></div>
             <div class="day-date">10</div>
             <div class="event-group cat-language-art">
@@ -319,7 +352,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-11">
             <div class="day-header-mobile">週五</div>
             <div class="day-date">11</div>
             <div class="event-group cat-language-art">
@@ -332,10 +365,10 @@
             </div>
         </div>
         
-        <div class="day-cell"><div class="day-header-mobile">週六</div><div class="day-date">12</div></div>
-        <div class="day-cell"><div class="day-header-mobile">週日</div><div class="day-date">13</div></div>
+        <div class="day-cell" data-date="2026-09-12"><div class="day-header-mobile">週六</div><div class="day-date">12</div></div>
+        <div class="day-cell" data-date="2026-09-13"><div class="day-header-mobile">週日</div><div class="day-date">13</div></div>
 
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-14">
             <div class="day-header-mobile">週一 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">14</div>
             <div class="event-group cat-language-art">
@@ -347,7 +380,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-15">
             <div class="day-header-mobile">週二 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">15</div>
             <div class="event-group cat-language-art">
@@ -356,7 +389,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-16">
             <div class="day-header-mobile">週三</div>
             <div class="day-date">16</div>
             <div class="event-group cat-language-art">
@@ -369,7 +402,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-17">
             <div class="day-header-mobile">週四 <span class="mobile-uniform">制服</span></div>
             <div class="day-date">17</div>
             <div class="event-group cat-language-art">
@@ -385,7 +418,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-18">
             <div class="day-header-mobile">週五</div>
             <div class="day-date">18</div>
             <div class="event-group cat-language-art">
@@ -398,7 +431,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-19">
             <div class="day-header-mobile">週六</div>
             <div class="day-date">19</div>
             <div class="event-group cat-school">
@@ -407,9 +440,9 @@
             </div>
         </div>
         
-        <div class="day-cell"><div class="day-header-mobile">週日</div><div class="day-date">20</div></div>
+        <div class="day-cell" data-date="2026-09-20"><div class="day-header-mobile">週日</div><div class="day-date">20</div></div>
 
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-21">
             <div class="day-header-mobile">週一 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">21</div>
             <div class="event-group cat-language-art">
@@ -418,7 +451,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-22">
             <div class="day-header-mobile">週二 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">22</div>
             <div class="event-group cat-language-art">
@@ -427,7 +460,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-23">
             <div class="day-header-mobile">週三</div>
             <div class="day-date">23</div>
             <div class="event-group cat-language-art">
@@ -443,7 +476,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-24">
             <div class="day-header-mobile">週四 <span class="mobile-uniform">制服</span></div>
             <div class="day-date">24</div>
             <div class="event-group cat-language-art">
@@ -462,7 +495,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-25">
             <div class="day-header-mobile">週五</div>
             <div class="day-date">25</div>
             <div class="event-group cat-school">
@@ -471,10 +504,10 @@
             </div>
         </div>
         
-        <div class="day-cell"><div class="day-header-mobile">週六</div><div class="day-date">26</div></div>
-        <div class="day-cell"><div class="day-header-mobile">週日</div><div class="day-date">27</div></div>
+        <div class="day-cell" data-date="2026-09-26"><div class="day-header-mobile">週六</div><div class="day-date">26</div></div>
+        <div class="day-cell" data-date="2026-09-27"><div class="day-header-mobile">週日</div><div class="day-date">27</div></div>
 
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-28">
             <div class="day-header-mobile">週一 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">28</div>
             <div class="event-group cat-school">
@@ -483,7 +516,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-29">
             <div class="day-header-mobile">週二 <span class="mobile-uniform">運動服</span></div>
             <div class="day-date">29</div>
             <div class="event-group cat-language-art">
@@ -495,7 +528,7 @@
             </div>
         </div>
         
-        <div class="day-cell">
+        <div class="day-cell" data-date="2026-09-30">
             <div class="day-header-mobile">週三</div>
             <div class="day-date">30</div>
             <div class="event-group cat-language-art">
@@ -514,6 +547,29 @@
         <div class="day-cell empty-day"></div>
     </div>
 </div>
+
+<script>
+    function scrollToToday() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${year}-${month}-${day}`;
+
+        const targetCell = document.querySelector(`.day-cell[data-date="${todayStr}"]`);
+
+        if (targetCell) {
+            document.querySelectorAll('.day-cell').forEach(cell => {
+                cell.classList.remove('highlight-day');
+            });
+
+            targetCell.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetCell.classList.add('highlight-day');
+        } else {
+            alert('今天不在 9 月行事曆範圍內或為假期！');
+        }
+    }
+</script>
 
 </body>
 </html>
